@@ -43,7 +43,7 @@ def get_challengers_players():
 
  data=response.json() # les données recues(data) seront laréponse qui sera transformée en dictionnaire python lisible
 
- players = data["entries"] # entries(mot clé de riot) contient des infos de joueurs:summoner Id ,...
+ players = data # entries(mot clé de riot) contient des infos de joueurs:summoner Id ,...
 
  print(f"✅ {len(players)} joueurs Challenger trouvés") # affiche le nombre de joueurs trouvés , {len(players)}: compte le nombre de joueurs 
 
@@ -65,7 +65,7 @@ def get_puuid(summoner_id): #() ne sont pas vide , c.a.d on doit donner l'inform
 
 # Partie 5 : Récupérer la liste des ids(identifiants) des matchs
 
-def get_matches(puuid, count=10):
+def get_matches(puuid, count=300):
  
  url = f"https://{REGION_MATCH}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?count={count}&queue=420"
 
@@ -125,7 +125,7 @@ for i , player in enumerate(players):
     time.sleep(1.2) #Sans sleep → 100 requêtes en 5 secondes → Riot bloque ❌
 #                   Avec sleep → 1 requête toutes les 1.2s  → Riot accepte ✅
 
-    match_ids=get_matches(puuid , count=100)  #Résultat final : Récupération des id des matchs des joueurs
+    match_ids=get_matches(puuid , count=300)  #Résultat final : Récupération des id des matchs des joueurs
 
 #Récupérer les détails des match à partir des ids des matchs
     for match_id in match_ids:
