@@ -1,0 +1,1 @@
+{"nombre_champions": 173, "nombre_roles": 5, "dim_embedding_champion": 16, "dim_embedding_role": 4, "colonnes_numeriques": ["champion_1_winrate", "champion_1_games", "champion_2_winrate", "champion_2_games", "duel_winrate", "duel_games"]}

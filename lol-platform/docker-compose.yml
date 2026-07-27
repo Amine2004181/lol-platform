@@ -1,0 +1,19 @@
+# Ce fichier décrit les 2 services de la plateforme : l'API et l'interface Streamlit
+# Lancement : docker compose up --build
+
+services:
+  api: # Le serveur FastAPI qui expose le modèle IA
+    build: . # Construit l'image à partir du Dockerfile dans ce dossier
+    command: uvicorn backend.api:app --host 0.0.0.0 --port 8000 # Démarre le serveur, accessible depuis l'extérieur du conteneur
+    ports:
+      - "8000:8000" # Rend l'API accessible sur http://localhost:8000 depuis la machine hôte
+
+  web: # L'interface utilisateur Streamlit
+    build: . # Construit la même image que l'API (même code, même dépendances)
+    command: streamlit run app/streamlit_app.py --server.address 0.0.0.0 --server.port 8501 # Démarre Streamlit, accessible depuis l'extérieur du conteneur
+    ports:
+      - "8501:8501" # Rend l'interface accessible sur http://localhost:8501 depuis la machine hôte
+    environment:
+      - API_URL=http://api:8000 # À l'intérieur de Docker, "api" est le nom du service ci-dessus (pas 127.0.0.1)
+    depends_on:
+      - api # Attend que le service api soit démarré avant de lancer web
